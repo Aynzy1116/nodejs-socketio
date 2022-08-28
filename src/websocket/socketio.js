@@ -12,10 +12,9 @@ function getSocket (server) {
     let timestamps = new Date().getTime()
     console.log('连接成功')
 
-    socket.emit('message', {
-      msgType: '我是websocket',
-      status: '200',
-      time: timestamps
+    socket.on('message', (data) => {
+      console.log('aaaaa', data)
+      socket.emit('message', data)
     })
 
   })

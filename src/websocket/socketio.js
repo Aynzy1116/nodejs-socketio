@@ -13,10 +13,10 @@ function getSocket (server) {
     console.log('连接成功')
     // console.log('io.sockets.sockets',io.sockets.sockets) //可以看到当前在线人数
     const socketID = socket.id
-    console.log('socket',socket.id);
+    // console.log('socket', socket.id);
     //登录时建立一个username到socketID的映射表
-    socket.on('login',username=>{
-      socketHandler.saveUserSocketId(username,socketID)
+    socket.on('login', username => {
+      socketHandler.saveUserSocketId(username, socketID)
     })
 
     socket.on('message', (data) => {
@@ -27,6 +27,10 @@ function getSocket (server) {
       //   console.log(rs)
       // })
       socket.emit('message', data)
+    })
+
+    socket.on('abc', () => {
+      io.emit('logout', socket.id)
     })
 
   })

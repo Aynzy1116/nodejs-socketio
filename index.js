@@ -10,9 +10,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // var http = require('http').Server(app);
 
-app.get('/list', (req, res) => {
-  res.send('<h1>Hello world</h1>');
-});
+// app.get('/list', (req, res) => {
+//   res.send('<h1>Hello world</h1>');
+// });
 
 const PORT = process.abort.PORT || 3001
 

@@ -2,6 +2,8 @@ const socket = {}
 const socketio = require('socket.io')
 
 
+let userList = {}
+
 function getSocket (server) {
   const io = socketio(server, {
     cors: true,
@@ -14,22 +16,21 @@ function getSocket (server) {
     // console.log('io.sockets.sockets',io.sockets.sockets) //可以看到当前在线人数
     const socketID = socket.id
     // console.log('socket', socket.id);
-    //登录时建立一个username到socketID的映射表
-    socket.on('login', username => {
-      socketHandler.saveUserSocketId(username, socketID)
+
+    socket.on('login', user => {
+      // userList=Object.assign(userList,user.username,user)
+      userList[user.username] = user
+      io.emit('userList',user)
+      console.log('userList',userList)
     })
 
     socket.on('message', (data) => {
-      console.log('aaaaa', data)
-      // Idtoid.findOne({
-      //   username:data.receiveName
-      // }).then(rs=>{
-      //   console.log(rs)
-      // })
-      socket.emit('message', data)
+      console.log('aaaaa', data)  
+      io.emit('message', data)
     })
 
-    socket.on('abc', () => {
+    socket.on('disconnect', () => {
+      console.log('断开连接',socket.id)
       io.emit('logout', socket.id)
     })
 
